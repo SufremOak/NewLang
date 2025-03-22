@@ -1,0 +1,14 @@
+req io;
+req fs;
+
+func Main( /*NL.NewArg("argv", "argc"&\ )) {
+    fs.scanFilesystem(".") * NL.Create.action({
+        on fs.scanFilesystem do [
+            fs.createVariable(for fs.Files(*/'files'&\))
+            io.println*ascii(files)
+        ]
+    })
+    exit(*\0)
+}
+
+inv(func(Main)) as Stage(fs())

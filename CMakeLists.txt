@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Find the LLVM package
-find_package(LLVM REQUIRED CONFIG)
+# find_package(LLVM REQUIRED CONFIG)
 
 # Include the LLVM headers
 include_directories(${LLVM_INCLUDE_DIRS})

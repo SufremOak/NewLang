@@ -1,0 +1,36 @@
+// This file serves as the entry point for the NewLang compiler.
+// It initializes the compiler components and orchestrates the compilation process.
+
+import "lexer.lexer"
+import "parser.parser"
+import "codegen.codegen"
+import "utils.utils"
+
+function main() {
+    // Initialize the lexer
+    lexer = new Lexer()
+    
+    // Read source code from input
+    sourceCode = readSourceCode("input.newlang")
+    
+    // Tokenize the source code
+    tokens = lexer.tokenize(sourceCode)
+    
+    // Initialize the parser
+    parser = new Parser()
+    
+    // Parse the tokens into an abstract syntax tree (AST)
+    ast = parser.parse(tokens)
+    
+    // Initialize the code generator
+    codegen = new CodeGenerator()
+    
+    // Generate LLVM IR code from the AST
+    llvmIR = codegen.generate(ast)
+    
+    // Output the generated LLVM IR code
+    writeLLVMIR("output.ll", llvmIR)
+}
+
+// Start the compilation process
+main()

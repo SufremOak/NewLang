@@ -1,4 +1,17 @@
+# Ignore build directory
 build/
+
+# Ignore executable files
 *.exe
 *.out
 a.out
+
+# Ignore Visual Studio Code settings
+.editor/vscode/.vscode/
+.editor/vscode/.vscode-test/
+
+# Ignore CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake.check_cache
+.cmake/

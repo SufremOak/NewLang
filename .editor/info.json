@@ -1,0 +1,12 @@
+{
+    "$schema": "https://sufremoak.github.io/MDK-SE-Modules/schema.json",
+    "Info": {
+        "Name": "NewLang editor extensions",
+        "Version": "0.0.1",
+        "License": "MIT",
+        "modules": {
+            "vscode": "./vscode"
+        },
+        "mdkCompat": "universal"
+    }
+}
