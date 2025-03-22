@@ -12,10 +12,11 @@
 #include <vector>
 #include <filesystem>
 #include <regex>
+#include <memory>
 
 class BaseCompiler {
 public:
-    BaseCompiler() : context(), builder(context), module("NewLangModule", context) {
+    BaseCompiler() : context(), builder(context), module(new llvm::Module("NewLangModule", context)) {
         llvm::InitializeNativeTarget();
         llvm::InitializeNativeTargetAsmPrinter();
         llvm::InitializeNativeTargetAsmParser();
@@ -28,31 +29,33 @@ public:
     }
 
     void printIR() {
-        module.print(llvm::outs(), nullptr);
+        module->print(llvm::outs(), nullptr);
     }
 
     void execute() {
         std::string errStr;
-        llvm::ExecutionEngine *engine = llvm::EngineBuilder(std::unique_ptr<llvm::Module>(&module)).setErrorStr(&errStr).create();
+        std::unique_ptr<llvm::Module> mod(module.release());
+        llvm::ExecutionEngine *engine = llvm::EngineBuilder(std::move(mod)).setErrorStr(&errStr).create();
         if (!engine) {
             llvm::errs() << "Failed to create ExecutionEngine: " << errStr << "\n";
             return;
         }
 
-        llvm::Function *mainFunc = module.getFunction("Main");
+        llvm::Function *mainFunc = engine->FindFunctionNamed("Main");
         if (!mainFunc) {
             llvm::errs() << "Function 'Main' not found in module.\n";
             return;
         }
 
         engine->finalizeObject();
-        engine->runFunctionAsMain(mainFunc, {}, nullptr);
+        std::vector<std::string> emptyArgs;
+        engine->runFunctionAsMain(mainFunc, emptyArgs, nullptr);
     }
 
 private:
     llvm::LLVMContext context;
     llvm::IRBuilder<> builder;
-    llvm::Module module;
+    std::unique_ptr<llvm::Module> module;
 
     struct Token {
         enum Type { Keyword, Identifier, Symbol, String, Number, EndOfFile, Comment } type;
@@ -114,16 +117,16 @@ private:
 
     void generateCode(const ASTNode &ast) {
         llvm::FunctionType *funcType = llvm::FunctionType::get(builder.getVoidTy(), false);
-        llvm::Function *function = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, ast.value, module);
+        llvm::Function *function = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, ast.value, module.get());
 
         llvm::BasicBlock *entry = llvm::BasicBlock::Create(context, "entry", function);
         builder.SetInsertPoint(entry);
 
         llvm::FunctionType *printfType = llvm::FunctionType::get(builder.getInt32Ty(), builder.getInt8PtrTy(), true);
-        llvm::Function *printfFunc = llvm::Function::Create(printfType, llvm::Function::ExternalLinkage, "printf", module);
+        llvm::Function *printfFunc = llvm::Function::Create(printfType, llvm::Function::ExternalLinkage, "printf", module.get());
 
         llvm::FunctionType *exitType = llvm::FunctionType::get(builder.getVoidTy(), builder.getInt32Ty(), false);
-        llvm::Function *exitFunc = llvm::Function::Create(exitType, llvm::Function::ExternalLinkage, "exit", module);
+        llvm::Function *exitFunc = llvm::Function::Create(exitType, llvm::Function::ExternalLinkage, "exit", module.get());
 
         for (const auto &child : ast.children) {
             if (child.type == ASTNode::StringLiteral) {

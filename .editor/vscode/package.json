@@ -2,7 +2,7 @@
   "name": "newlang",
   "displayName": "NewLang for VsCode",
   "description": "NewLang support for code/vscode/vscodium",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.98.0"
   },
@@ -10,16 +10,29 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "newlang",
-      "aliases": ["NewLang", "newlang"],
-      "extensions": [".new",".newproj"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "newlang",
-      "scopeName": "source.new",
-      "path": "./syntaxes/newlang.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "newlang",
+        "aliases": [
+          "NewLang",
+          "newlang"
+        ],
+        "extensions": [
+          ".new",
+          ".newproj"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "newlang",
+        "scopeName": "source.new",
+        "path": "./syntaxes/newlang.tmLanguage.json"
+      }
+    ]
+  },
+  "dependencies": {
+    "vsce": "^2.15.0"
   }
 }
