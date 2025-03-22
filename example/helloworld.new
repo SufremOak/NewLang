@@ -1,0 +1,8 @@
+req io;
+
+func Main( /*&\ ) { // <-- "/*&\" = null
+    io.println*ascii("Hello, World!\\*nEndl") // <-- Print "Hello, World" to the console
+    exit(*\0) // <-- exit the program
+}
+
+inv(func(Main)) as Stage() // <-- Invoque Main function
