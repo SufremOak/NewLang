@@ -1,18 +1,18 @@
 # NewLang
 
-NewLang is a new programming language that uses LLVM for the base compiler. The rest of the compiler is written in NewLang itself.
+NewLang is a new programming language that uses bison for the baselang. The rest of the compiler is written in NewLang itself.
 
 ## Features
 
 - Basic syntax highlighting and language support in Visual Studio Code
-- Lexer, parser, and code generator implemented using LLVM
+- Lexer, parser, and code generator implemented using `bison` and `flex`
 - Example programs included
 
 ## Getting Started
 
 ### Prerequisites
 
-- [LLVM](https://llvm.org/)
+- [GNU bison](https://www.gnu.org/software/bison/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) for VS Code extension development
 
