@@ -12,6 +12,8 @@
 #include <vector>
 #include <filesystem>
 #include <regex>
+#include <fstream>
+#include <getopt.h>
 
 class BaseCompiler {
 public:
@@ -139,37 +141,41 @@ private:
     }
 };
 
-int main() {
-    BaseCompiler compiler;
-    std::string helloWorldCode = R"(
-        req io;
-        func Main() {
-            io.println*ascii("Hello, World!\n");
-            exit(0);
-        }
-        inv(func(Main)) as Stage();
-    )";
-    compiler.compile(helloWorldCode);
-    compiler.printIR();
-    compiler.execute();
+int main(int argc, char *argv[]) {
+    std::vector<std::string> sourceFiles;
+    int opt;
 
-    std::string listFilesCode = R"(
-        req io;
-        req fs;
-        func Main() {
-            fs.scanFilesystem(".") * NL.Create.action({
-                on fs.scanFilesystem do [
-                    fs.createVariable(for fs.Files('files'))
-                    io.println*ascii(files)
-                ]
-            })
-            exit(0);
+    // Command-line argument parsing
+    while ((opt = getopt(argc, argv, "f:")) != -1) {
+        switch (opt) {
+            case 'f':
+                sourceFiles.push_back(optarg);
+                break;
+            default:
+                std::cerr << "Usage: " << argv[0] << " -f <source_file>\n";
+                return EXIT_FAILURE;
         }
-        inv(func(Main)) as Stage(fs());
-    )";
-    compiler.compile(listFilesCode);
-    compiler.printIR();
-    compiler.execute();
+    }
+
+    if (sourceFiles.empty()) {
+        std::cerr << "No source files provided.\n";
+        return EXIT_FAILURE;
+    }
+
+    BaseCompiler compiler;
+
+    for (const auto &file : sourceFiles) {
+        std::ifstream sourceFile(file);
+        if (!sourceFile) {
+            std::cerr << "Error opening file: " << file << "\n";
+            return EXIT_FAILURE;
+        }
+
+        std::string sourceCode((std::istreambuf_iterator<char>(sourceFile)), std::istreambuf_iterator<char>());
+        compiler.compile(sourceCode);
+        compiler.printIR();
+        compiler.execute();
+    }
 
     return 0;
 }
