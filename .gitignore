@@ -5,10 +5,12 @@ build/
 *.exe
 *.out
 a.out
+*.vsix
 
 # Ignore Visual Studio Code settings
 .editor/vscode/.vscode/
 .editor/vscode/.vscode-test/
+.editor/vscode/node_modules/
 
 # Ignore CMake files
 CMakeCache.txt
