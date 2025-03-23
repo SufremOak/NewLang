@@ -12,6 +12,7 @@
 #include <vector>
 #include <filesystem>
 #include <regex>
+#include <fstream>
 
 class BaseCompiler {
 public:
@@ -143,17 +144,14 @@ private:
 
 int main(int argc, char *argv[]) {
     std::vector<std::string> sourceFiles;
-    int opt;
 
     // Command-line argument parsing
-    while ((opt = getopt(argc, argv, "f:")) != -1) {
-        switch (opt) {
-            case 'f':
-                sourceFiles.push_back(optarg);
-                break;
-            default:
-                std::cerr << "Usage: " << argv[0] << " -f <source_file>\n";
-                return EXIT_FAILURE;
+    for (int i = 1; i < argc; ++i) {
+        if (std::string(argv[i]) == "-f" && i + 1 < argc) {
+            sourceFiles.push_back(argv[++i]);
+        } else {
+            std::cerr << "Usage: " << argv[0] << " -f <source_file>\n";
+            return EXIT_FAILURE;
         }
     }
 
