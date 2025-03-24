@@ -1,3 +1,11 @@
 {
-    
+   "mdkConfig": {
+      "name": "newlang",
+      "version": "0.0.2",
+      "deps":  {
+        "cmake": "./CMakeLists.txt",
+        "python3": "./py3/setup.py",
+        "sh": "/usr/bin/bash"
+      }
+   }
 }

@@ -6,10 +6,10 @@
 #include <fstring>
 
 public:
-  void InterpretCommand(int args) {
-    while(1) {
-      printf();
-    }
-  }
+  void InterpretCommand(int args) {}
 
-int main() {}
+  static void repl() {}
+
+int main() {
+  return 0;
+}

@@ -1,5 +1,5 @@
 AC_INIT([newlang-base], [0.0.2])
-AC_CONFIG_SRCDIR([basecompiler.cc])
+AC_CONFIG_SRCDIR([baserel.cc])
 
 # Checks for programs.
 AC_PROG_CXX
@@ -10,7 +10,7 @@ AX_LLVM([3.5], [optional]) # Specify minimum required version, optional indicate
 
 # Check for specific LLVM components (optional, based on your needs)
 # For example:
-# AX_LLVM_COMPONENT_X86
+AX_LLVM_COMPONENT_X86
 # AX_LLVM_COMPONENT_ANALYSIS
 # ...
 
@@ -19,7 +19,7 @@ AX_LLVM([3.5], [optional]) # Specify minimum required version, optional indicate
 # AC_CHECK_LIB([z], [compress])
 
 # Check for header files.
-AC_CHECK_HEADERS([iostream])
+AC_CHECK_HEADERS([iostream, stdlib.h])
 
 # Check for typedefs, structures, and compiler characteristics.
 # For example:
