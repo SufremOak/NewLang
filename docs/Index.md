@@ -3,7 +3,7 @@
 </center>
 
 ## Introduction
-
+NewLang is an hybrid programming language made with traditional `GNU` tools (`bison`, `flex`, and `gcc`)
 
 ## Understanding the Syntax
 

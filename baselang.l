@@ -17,7 +17,8 @@
 "inv"          { return INV; }
 "as"           { return AS; }
 "Stage"        { return STAGE; }
-"Hello, World!" { return STRING; }
+// ""
+// "Hello, World!" { return STRING; }
 "\\n"          { return STRING; }
 "\\0"          { return NULL_TOKEN; }
 "*"            { return STAR; }

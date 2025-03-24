@@ -68,7 +68,11 @@ extern int yydebug;
     NUMBER = 269,                  /* NUMBER  */
     IDENTIFIER = 270,              /* IDENTIFIER  */
     STAR = 271,                    /* STAR  */
-    NULL_TOKEN = 272               /* NULL_TOKEN  */
+    NULL_TOKEN = 272,              /* NULL_TOKEN  */
+    OF = 273,                      /* OF  */
+    ENUM = 274,                    /* ENUM  */
+    TYPE = 275,                    /* TYPE  */
+    NLFUNC = 276                   /* NLFUNC  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

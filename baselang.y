@@ -11,8 +11,8 @@ FILE *yyin; // Declare yyin for file input
 
 // Token definitions
 %token REQ FUNC MAIN IO FS PRINT EXIT INV AS STAGE
-%token STRING NUMBER IDENTIFIER STAR NULL_TOKEN // Renamed NULL to NULL_TOKEN
-
+%token STRING NUMBER IDENTIFIER STAR NULL_TOKEN
+%token OF ENUM TYPE NLFUNC
 %left '+' '-'
 %left '*' '/'
 
